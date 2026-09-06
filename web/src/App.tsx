@@ -8,6 +8,7 @@ import AssessmentListPage from "@/pages/assessments/AssessmentListPage";
 import AssessmentNewPage from "@/pages/assessments/AssessmentNewPage";
 import AssessmentEditPage from "@/pages/assessments/AssessmentEditPage";
 import AssessmentInvitePage from "@/pages/assessments/AssessmentInvitePage";
+import DashboardPage from "@/pages/dashboard/DashboardPage";
 import LiveMonitorPage from "@/pages/monitor/LiveMonitorPage";
 import PortfolioPage from "@/pages/portfolio/PortfolioPage";
 import FitGapReportPage from "@/pages/fitgap/FitGapReportPage";
@@ -28,6 +29,7 @@ export default function App() {
       <Route element={<ProtectedRoute />}>
       <Route element={<AssessorLayout />}>
         <Route path="/" element={<Navigate to="/assessments" replace />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/assessments" element={<AssessmentListPage />} />
         <Route path="/assessments/new" element={<AssessmentNewPage />} />
         <Route path="/assessments/:id/edit" element={<AssessmentEditPage />} />

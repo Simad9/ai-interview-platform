@@ -10,6 +10,10 @@ vi.mock("@/services/auth", () => ({
   authApi: { login: vi.fn(), signup: vi.fn() },
 }));
 
+vi.mock("@/services/health", () => ({
+  healthApi: { check: vi.fn().mockResolvedValue({ data: { status: "ok" } }) },
+}));
+
 function renderSignup() {
   return render(
     <JotaiProvider>
@@ -45,6 +49,8 @@ describe("SignupPage", () => {
   it("shows validation errors for an empty submit", async () => {
     const user = userEvent.setup();
     renderSignup();
+
+    expect(await screen.findByText("Backend online")).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Sign up" }));
 

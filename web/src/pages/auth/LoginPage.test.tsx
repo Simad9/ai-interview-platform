@@ -10,6 +10,10 @@ vi.mock("@/services/auth", () => ({
   authApi: { login: vi.fn(), signup: vi.fn() },
 }));
 
+vi.mock("@/services/health", () => ({
+  healthApi: { check: vi.fn().mockResolvedValue({ data: { status: "ok" } }) },
+}));
+
 function renderLogin() {
   return render(
     <JotaiProvider>
@@ -34,6 +38,8 @@ describe("LoginPage", () => {
   it("logs in, stores the token, and redirects to /assessments", async () => {
     const user = userEvent.setup();
     renderLogin();
+
+    expect(await screen.findByText("Backend online")).toBeInTheDocument();
 
     await user.type(screen.getByLabelText("Email"), "admin@test.com");
     await user.type(screen.getByLabelText("Password"), "password123");

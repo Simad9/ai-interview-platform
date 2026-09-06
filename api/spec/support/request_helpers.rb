@@ -15,6 +15,25 @@ module RequestHelpers
     post '/api/v1/auth/login', params: attrs, headers: tenant_headers.merge(headers)
   end
 
+  # Logs in and returns the raw JWT for use in an Authorization header.
+  def login_get_token(email:, password:)
+    post_login({ email:, password: })
+    raise "login failed: #{json_body.inspect}" unless response.ok?
+
+    json_body['token']
+  end
+
+  def auth_headers(token)
+    { 'Authorization' => "Bearer #{token}" }
+  end
+
+  # Factory-created records in specs live outside an HTTP request, so give them
+  # an explicit tenant context (TenantScoped assigns tenant_id on validate).
+  def with_current_tenant(organization)
+    Current.organization = organization
+    Current.tenant_id    = organization.id
+  end
+
   private
 
   def tenant_headers

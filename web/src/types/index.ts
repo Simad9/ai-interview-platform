@@ -231,6 +231,7 @@ export type InterviewState =
   | "reconnecting"
   | "draining_audio"
   | "ending"
+  | "error"
   | "complete";
 
 export type InterviewSpeaker = "ai" | "candidate" | null;
